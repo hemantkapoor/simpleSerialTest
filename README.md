@@ -7,15 +7,17 @@ Simple Serial Test is an application to test "Simple Serial" ... Surprise...
 
 git clone --recursive.
 
+##Compilation
 
-## Usage
+This is a cmake project.
 
-Simply clone the respository as a submodule into your project.
+Simply run following commands
 
-For 
 ```bash
-./bin/simpleSerialComms
+cmake .
+make
 ```
+
 
 ## TEST
 
