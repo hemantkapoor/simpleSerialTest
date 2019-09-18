@@ -6,7 +6,7 @@ Simple Serial Test is an application to test "Simple Serial" ... Surprise...
 ## Installation
 
 ```
-git clone https://github.com/hemantkapoor/simpleSerialTest.git
+git clone --recursive https://github.com/hemantkapoor/simpleSerialTest.git
 ```
 
 ##Compilation
