@@ -1,0 +1,3 @@
+[submodule "src/simpleSerial"]
+	path = src/simpleSerial
+	url = https://github.com/hemantkapoor/simpleSerial.git
