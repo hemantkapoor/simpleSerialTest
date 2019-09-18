@@ -12,6 +12,8 @@
 #include <vector>
 #include <future>
 #include"simpleSerial/comms/Comms.h"
+#include"simpleSerial/callback/BaseCallback.h"
+#include"simpleSerial/utility/Utility.h"
 
 
 char GetUserOption()
@@ -21,17 +23,31 @@ char GetUserOption()
     return option;
 }
 
+class testSerialCallback : public SimpleSerialName::BaseCallback
+{
+public:
+	testSerialCallback() = default;
+	void callback(std::vector<uint8_t>& data) override
+	{
+		std::cout<<__PRETTY_FUNCTION__<< " : " << SimpleSerialName::Utility::hexStr(data.data(),data.size())<<std::endl;
+	}
+};
+
 int main() {
 	std::cout << "!!!Hello World!!!" << std::endl; // prints !!!Hello World!!!
-	std::string serialPath =  R"(/dev/pts/1)";
-	auto sp = std::make_shared<Comms>(serialPath);
+	std::string serialPath =  R"(/dev/pts/19)";
+	auto sp = std::make_shared<SimpleSerialName::Comms>(serialPath);
 	if(sp->startComms() == false)
 	{
 		std::cout<<__PRETTY_FUNCTION__<<" : Cannot access serial port\r\n";
 		return -1;
 	}
+
+	//Lets add a callback
+	auto myCallback = std::make_shared<testSerialCallback>();
+	sp->addCallback(myCallback);
 	//If here then we better spawn a thread
-	std::thread thread_1(&Comms::processRead, sp);
+	std::thread thread_1(&SimpleSerialName::Comms::processRead, sp);
 	std::cout<<__PRETTY_FUNCTION__<<" : Serial port Running... Press q to quit\r\n";
 	char option;
 
