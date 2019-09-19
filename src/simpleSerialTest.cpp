@@ -35,7 +35,7 @@ public:
 
 int main() {
 	std::cout << "!!!Hello World!!!" << std::endl; // prints !!!Hello World!!!
-	std::string serialPath =  R"(/dev/pts/19)";
+	std::string serialPath =  R"(/dev/pts/3)";
 	auto sp = std::make_shared<SimpleSerialName::Comms>(serialPath);
 	if(sp->startComms() == false)
 	{
@@ -47,7 +47,6 @@ int main() {
 	auto myCallback = std::make_shared<testSerialCallback>();
 	sp->addCallback(myCallback);
 	//If here then we better spawn a thread
-	std::thread thread_1(&SimpleSerialName::Comms::processRead, sp);
 	std::cout<<__PRETTY_FUNCTION__<<" : Serial port Running... Press q to quit\r\n";
 	char option;
 
@@ -70,8 +69,6 @@ int main() {
 	}
 	//We are here so do graceful exit
 	std::cout<<__PRETTY_FUNCTION__<<" : Closing Application\r\n";
-	sp->stopRead();
-	thread_1.join();
 
 	return 0;
 }
